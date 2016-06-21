@@ -1,0 +1,7 @@
+[package]
+name = "circle"
+version = "0.1.0"
+authors = ["rexim <reximkut@gmail.com>"]
+
+[dependencies]
+sdl2 = "0.19"
