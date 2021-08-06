@@ -43,7 +43,7 @@ fn checker_pattern(pixels: &mut [u32], width: usize, height: usize, tile_size: u
     }
 }
 
-// TODO: compute the distances between the pixels starting from the center of the pixel to avoid the image offcentering on low resolution
+// TODO: compute the distances between the pixels starting from the center of the pixel to avoid the image offcentering at low resolution
 fn fill_solid_circle(pixels: &mut [u32], width: usize, height: usize, radius: usize, foreground: u32, background: u32)
 {
     let cx = (width / 2) as i32;
