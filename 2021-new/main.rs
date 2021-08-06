@@ -43,16 +43,16 @@ fn checker_pattern(pixels: &mut [u32], width: usize, height: usize, tile_size: u
     }
 }
 
-// TODO: compute the distances between the pixels starting from the center of the pixel to avoid the image offcentering at low resolution
 fn fill_solid_circle(pixels: &mut [u32], width: usize, height: usize, radius: usize, foreground: u32, background: u32)
 {
-    let cx = (width / 2) as i32;
-    let cy = (height / 2) as i32;
-    let r = radius as i32;
+    // TODO: can we do the center of pixel computations in integers?
+    let cx = width as f32 * 0.5;
+    let cy = height as f32 * 0.5;
+    let r = radius as f32;
     for y in 0..height {
         for x in 0..width {
-            let dx = cx - x as i32;
-            let dy = cy - y as i32;
+            let dx = cx - (x as f32 + 0.5);
+            let dy = cy - (y as f32 + 0.5);
 
             pixels[y * width + x] = if dx*dx + dy*dy <= r*r {
                 foreground
@@ -68,8 +68,8 @@ fn draw_hollow_circle(_pixels: &mut [u32], _width: usize, _height: usize, _radiu
 }
 
 fn main() {
-    const WIDTH: usize = 512;
-    const HEIGHT: usize = 512;
+    const WIDTH: usize = 64;
+    const HEIGHT: usize = 64;
     const FOREGROUND: u32 = 0xFF00FF;
     const BACKGROUND: u32 = 0x000000;
     let mut pixels = [0u32; WIDTH * HEIGHT];
