@@ -13,4 +13,4 @@ The program will generate a bunch of PPM files with different patterns including
 
 ## Screenshots
 
-![stripes](screenshots/stripes.png)
+![stripes](screenshots/stripes.png) ![checker](screenshots/checker.png)
