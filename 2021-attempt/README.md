@@ -13,4 +13,10 @@ The program will generate a bunch of PPM files with different patterns including
 
 ## Screenshots
 
+These are just random patterns we used to test the renderer out:
+
 ![stripes](screenshots/stripes.png) ![checker](screenshots/checker.png)
+
+Here are the circles. Both solid and hollow:
+
+![solid](screenshots/solid.png) ![hollow](./screenshots/hollow.png)
