@@ -74,7 +74,7 @@ fn draw_hollow_circle(pixels: &mut [u32], width: usize, height: usize, radius: u
     let mut x = 0.0;
     let mut y = r - 0.5;
 
-    while (x <= y) {
+    while x <= y {
         let px = x + cx;
         let py = y + cy;
         if (0.0..w).contains(&px) && (0.0..h).contains(&py) {
@@ -103,25 +103,25 @@ fn draw_hollow_circle(pixels: &mut [u32], width: usize, height: usize, radius: u
 }
 
 fn main() {
-    const WIDTH: usize = 512;
-    const HEIGHT: usize = 512;
+    const WIDTH: usize = 256;
+    const HEIGHT: usize = 256;
     const FOREGROUND: u32 = 0xFF00FF;
     const BACKGROUND: u32 = 0x000000;
     let mut pixels = [0u32; WIDTH * HEIGHT];
 
     pixels.fill(0x00FF00);
-    stripes_pattern(&mut pixels, WIDTH, HEIGHT, 32, FOREGROUND, BACKGROUND);
-    save_as_ppm("stripes.ppm", &pixels, WIDTH, HEIGHT);
+    stripes_pattern(&mut pixels, WIDTH, HEIGHT, WIDTH / 16, FOREGROUND, BACKGROUND);
+    save_as_ppm("stripes.ppm", &pixels, WIDTH, HEIGHT).unwrap();
 
     pixels.fill(0x00FF00);
-    checker_pattern(&mut pixels, WIDTH, HEIGHT, 32, FOREGROUND, BACKGROUND);
-    save_as_ppm("checker.ppm", &pixels, WIDTH, HEIGHT);
+    checker_pattern(&mut pixels, WIDTH, HEIGHT, WIDTH / 16, FOREGROUND, BACKGROUND);
+    save_as_ppm("checker.ppm", &pixels, WIDTH, HEIGHT).unwrap();
 
     pixels.fill(0x00FF00);
-    fill_solid_circle(&mut pixels, WIDTH, HEIGHT, WIDTH / 2, FOREGROUND, BACKGROUND);
-    save_as_ppm("solid.ppm", &pixels, WIDTH, HEIGHT);
+    fill_solid_circle(&mut pixels, WIDTH, HEIGHT, WIDTH / 3, FOREGROUND, BACKGROUND);
+    save_as_ppm("solid.ppm", &pixels, WIDTH, HEIGHT).unwrap();
 
     pixels.fill(0x00FF00);
     draw_hollow_circle(&mut pixels, WIDTH, HEIGHT, WIDTH / 3, FOREGROUND, BACKGROUND);
-    save_as_ppm("hollow.ppm", &pixels, WIDTH, HEIGHT);
+    save_as_ppm("hollow.ppm", &pixels, WIDTH, HEIGHT).unwrap();
 }
