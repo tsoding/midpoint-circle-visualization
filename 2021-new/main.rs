@@ -1,10 +1,10 @@
 use std::fs::File;
 use std::io;
-use std::io::Write;
+use std::io::{Write, BufWriter};
 
 fn save_as_ppm(file_path: &str, pixels: &[u32], width: usize, height: usize) -> io::Result<()>
 {
-    let mut file = File::create(file_path)?;
+    let mut file = BufWriter::with_capacity(width * height * 3, File::create(file_path)?);
     write!(file, "P6\n{} {} 255\n", width, height)?;
     for y in 0..height {
         for x in 0..width {
