@@ -1,4 +1,4 @@
-# Another attempt to implement the algorithm in 2021
+# Second Attempt to Implement [Midpoint Circle Algorith](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm) (2021, colorized)
 
 No dependencies. Single self-contained rust file. Visualization is done via output [PPM images](https://en.wikipedia.org/wiki/Netpbm)
 

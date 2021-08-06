@@ -1,6 +1,6 @@
-# First attempt to implement the algorithm in 2016
+# First Attempt to Implement [Midpoint Circle Algorith](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm) (2016, colorized)
 
-Kinda crappy, but it does something. Rendering is done via SDL2. The code stopped working in 2021, so we had to manually fix it, because something changed in the Rust compiler.
+Kinda crappy, but it does something. Rendering is done via [SDL2](https://www.libsdl.org/). The code stopped working in 2021, so we had to manually fix it, because something changed in the Rust compiler itself.
 
 ## Quick Start
 
