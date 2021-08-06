@@ -62,13 +62,50 @@ fn fill_solid_circle(pixels: &mut [u32], width: usize, height: usize, radius: us
     }
 }
 
-fn draw_hollow_circle(_pixels: &mut [u32], _width: usize, _height: usize, _radius: usize, _foreground: u32, _background: u32) {
-    todo!();
+fn draw_hollow_circle(pixels: &mut [u32], width: usize, height: usize, radius: usize, foreground: u32, background: u32) {
+    pixels.fill(background);
+
+    // TODO: integer subpixel computations in draw_hollow_circle()
+
+    let w = width as f32;
+    let h = height as f32;
+    let r = radius as f32;
+    let cx = w / 2.0;
+    let cy = h / 2.0;
+    let mut x = 0.0;
+    let mut y = r - 0.5;
+
+    while (x <= y) {
+        let px = x + cx;
+        let py = y + cy;
+        if (0.0..w).contains(&px) && (0.0..h).contains(&py) {
+            let dx = px as usize;
+            let dy = py as usize;
+            assert!(width == height);
+
+            pixels[dy * width + dx] = foreground;
+            pixels[dx * width + dy] = foreground;
+
+            pixels[(height - dy) * width + dx] = foreground;
+            pixels[dx * width + (height - dy)] = foreground;
+
+            pixels[dy * width + (width - dx)] = foreground;
+            pixels[(width - dx) * width + dy] = foreground;
+
+            pixels[(height - dy) * width + (width - dx)] = foreground;
+            pixels[(width - dx) * width + (height - dy)] = foreground;
+        }
+
+        x += 1.0;
+        if x*x + y*y > r*r {
+            y -= 1.0;
+        }
+    }
 }
 
 fn main() {
-    const WIDTH: usize = 16;
-    const HEIGHT: usize = 16;
+    const WIDTH: usize = 512;
+    const HEIGHT: usize = 512;
     const FOREGROUND: u32 = 0xFF00FF;
     const BACKGROUND: u32 = 0x000000;
     let mut pixels = [0u32; WIDTH * HEIGHT];
@@ -86,6 +123,6 @@ fn main() {
     save_as_ppm("solid.ppm", &pixels, WIDTH, HEIGHT);
 
     pixels.fill(0x00FF00);
-    draw_hollow_circle(&mut pixels, WIDTH, HEIGHT, HEIGHT / 2, FOREGROUND, BACKGROUND);
+    draw_hollow_circle(&mut pixels, WIDTH, HEIGHT, WIDTH / 3, FOREGROUND, BACKGROUND);
     save_as_ppm("hollow.ppm", &pixels, WIDTH, HEIGHT);
 }
