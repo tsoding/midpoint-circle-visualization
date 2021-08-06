@@ -3,8 +3,17 @@ extern crate sdl2;
 use sdl2::pixels::Color;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
-use sdl2::render::Renderer;
-use sdl2::rect::{Rect, Point};
+use sdl2::rect::Rect;
+
+#[allow(dead_code)]
+enum Mode {
+    Points,
+    Lines,
+}
+
+const MODE: Mode = Mode::Lines;
+const CLEAR_FRAMES: bool = false;
+const k: i32 = 10;
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -27,9 +36,6 @@ fn main() {
     let mut x = r;
     let mut y = 0;
     let mut err = 0;
-
-    let k = 15;
-
 
     let mut pause = false;
 
@@ -55,31 +61,42 @@ fn main() {
             }
         }
 
-        renderer.set_draw_color(Color::RGB(0, 0, 0));
-        renderer.clear();
+        if CLEAR_FRAMES {
+            renderer.set_draw_color(Color::RGB(0, 0, 0));
+            renderer.clear();
+        }
 
         renderer.set_draw_color(Color::RGB(255, 0, 0));
-
         if x >= y {
-            // renderer.fill_rect(Rect::new(cx + x - k, cy + y - k, k as u32, k as u32));
-            // renderer.fill_rect(Rect::new(cx + x - k, cy - y - k, k as u32, k as u32));
-            renderer.fill_rect(Rect::new(cx + x - k, cy - y - k, k as u32, 2 * y as u32));
+            match MODE {
+                Mode::Points => {
+                    renderer.fill_rect(Rect::new(cx + x - k, cy + y - k, k as u32, k as u32));
+                    renderer.fill_rect(Rect::new(cx + x - k, cy - y - k, k as u32, k as u32));
 
-            // renderer.fill_rect(Rect::new(cx + y - k, cy + x - k, k as u32, k as u32));
-            // renderer.fill_rect(Rect::new(cx + y - k, cy - x - k, k as u32, k as u32));
-            renderer.fill_rect(Rect::new(cx + y - k, cy - x - k, k as u32, 2 * x as u32));
+                    renderer.fill_rect(Rect::new(cx + y - k, cy + x - k, k as u32, k as u32));
+                    renderer.fill_rect(Rect::new(cx + y - k, cy - x - k, k as u32, k as u32));
 
-            // renderer.fill_rect(Rect::new(cx - y - k, cy + x - k, k as u32, k as u32));
-            // renderer.fill_rect(Rect::new(cx - y - k, cy - x - k, k as u32, k as u32));
-            renderer.fill_rect(Rect::new(cx - y - k, cy - x - k, k as u32, 2 * x as u32));
+                    renderer.fill_rect(Rect::new(cx - y - k, cy + x - k, k as u32, k as u32));
+                    renderer.fill_rect(Rect::new(cx - y - k, cy - x - k, k as u32, k as u32));
 
-            // renderer.fill_rect(Rect::new(cx - x - k, cy + y - k, k as u32, k as u32));
-            // renderer.fill_rect(Rect::new(cx - x - k, cy - y - k, k as u32, k as u32));
-            renderer.fill_rect(Rect::new(cx - x - k, cy - y - k, k as u32, 2 * y as u32));
+                    renderer.fill_rect(Rect::new(cx - x - k, cy + y - k, k as u32, k as u32));
+                    renderer.fill_rect(Rect::new(cx - x - k, cy - y - k, k as u32, k as u32));
+                },
+
+                Mode::Lines => {
+                    renderer.fill_rect(Rect::new(cx + x - k, cy - y - k, k as u32, 2 * y as u32));
+
+                    renderer.fill_rect(Rect::new(cx + y - k, cy - x - k, k as u32, 2 * x as u32));
+
+                    renderer.fill_rect(Rect::new(cx - y - k, cy - x - k, k as u32, 2 * x as u32));
+
+                    renderer.fill_rect(Rect::new(cx - x - k, cy - y - k, k as u32, 2 * y as u32));
+                },
+            }
 
             if !pause {
                 y += 1;
-                err += 1 + 2*y;
+                err += 1 + 2 * y;
                 if 2 * (err - x) + 1 > 0 {
                     x -= 1;
                     err += 1 - 2 * x;
